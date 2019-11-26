@@ -4,37 +4,80 @@ const Schema = mongoose.Schema;
 
 const StudentSchema = new Schema({
     contactinfo: {
-    firstname: String,
-    lastname: String,
-    phonenumber: String,
-    email: String
+        firstname: String,
+        lastname: String,
+        phonenumber: String,
+        email:  {
+            type: String,
+            unique: true,
+            match: [/.+@.+\..+/, "Please enter a valid e-mail address"]
+          },
     },
     payment: {
-        cash: false,
-        directdeposit: false,
-        payduealert: false
+        cash: {
+            type: Boolean,
+            default: false
+        },
+        directdeposit: {
+            type: Boolean,
+            default: false
+        },
+        payduealert: {
+            type: Boolean,
+            default: false
+        }
     },
     merch: {
-        merchalert: false
+        merchalert: {
+            type: Boolean,
+            default: false
+        }
     },
     competition: {
-        competitionalert: false
+        competitionalert: {
+            type: Boolean,
+            default: false
+        }
     },
     other: {
-        otheralert: false
+        otheralert: {
+            type: Boolean,
+            default: false
+        }
     },
     classes: {
-        gi: Number,
-        nogi: Number,
-        kickboxing: Number
+        gi: {
+            type: Number,
+            default: 0
+        },
+        nogi: {
+            type: Number,
+            default: 0
+        },
+        kickboxing: {
+            type: Number,
+            default: 0
+        }
     },
     rank: {
-        belt: String,
-        stripes: String,
-        dateoflastpromotion: Date
+        belt: {
+            type: String,
+            default: "white"
+        },
+        stripes: {
+            type: Number,
+            default: 0
+        },
+        dateoflastpromotion: {
+            type: Date,
+            default: Date.now
+        },
     },
     status: {
-        active: false
+        active: {
+            type: Boolean,
+            default: false
+        }
     }
 });
 
@@ -43,3 +86,4 @@ const Student = mongoose.model('student', StudentSchema);
 
 //export
 module.exports = Student;
+
