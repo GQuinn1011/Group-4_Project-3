@@ -6,7 +6,12 @@ const StudentSchema = new Schema({
     contactinfo: {
         firstname: String,
         lastname: String,
-        phonenumber: String,
+        phonenumber: {
+            type: String,
+            unique: true,
+            match: [/^\(?[2-9]\d{2}[-)]?\d{3}-?\d{4}$/, "Please enter a ten-digit phone number"]
+   
+        },
         email:  {
             type: String,
             unique: true,
@@ -46,6 +51,12 @@ const StudentSchema = new Schema({
         }
     },
     classes: {
+        attended: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Attendance"
+              }
+        ],
         gi: {
             type: Number,
             default: 0
@@ -82,7 +93,7 @@ const StudentSchema = new Schema({
 });
 
 //collection 'student' made from StudentSchema
-const Student = mongoose.model('student', StudentSchema);
+const Student = mongoose.model('Student', StudentSchema);
 
 //export
 module.exports = Student;

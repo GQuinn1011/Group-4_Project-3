@@ -25,11 +25,33 @@ mongoose.connect(
   { useNewUrlParser: true }
 );
 
-db.Student.create({contactinfo: {
-  firstname: "Michael",
-  lastname: "Cuccia",
-  phonenumber: 5551234567,
-  email: "michael@mail.com"
-  }})
+//Create a Student 
+// db.Student.create({contactinfo: {
+//   firstname: "Renita",
+//   lastname: "Cuccia",
+//   phonenumber: '723-555-4567',
+//   email: "ren@mail.com"
+//   }})
+
+//Create a Class
+// db.Class.create({
+//   title: "test"
+// })
+
+//Have a Student Attend a Class
+// db.Attendance.create({
+//   studentID: "5ddec33438fbd51924a1060f",
+//   classID: "5ddec9859c7eba30987ae5c5"
+// })
+
+//Update Student with Class Attended
+//NEEDS WORK! 
+db.Student.findOneAndUpdate({
+  'contactinfo.email': "ren@mail.com"
+}, 
+{$push: {'classes.attended': "5ddeca3287fea5345035817b" }}).then( (err,data)=>console.log(err, data))
+
+
+
 
 app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
