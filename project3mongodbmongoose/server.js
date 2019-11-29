@@ -26,30 +26,32 @@ mongoose.connect(
 );
 
 //Create a Student 
-// db.Student.create({contactinfo: {
-//   firstname: "Renita",
-//   lastname: "Cuccia",
-//   phonenumber: '723-555-4567',
-//   email: "ren@mail.com"
-//   }})
+db.Student.create({contactinfo: {
+  firstname: "Test1firstname",
+  lastname: "Test1lastname",
+  phonenumber: '555-555-0001',
+  email: "Test1email@mail.com"
+  }})
 
 //Create a Class
-// db.Class.create({
-//   title: "test"
-// })
+db.Class.create({
+  title: "Test1classtitle"
+})
 
 //Have a Student Attend a Class
-// db.Attendance.create({
-//   studentID: "5ddec33438fbd51924a1060f",
-//   classID: "5ddec9859c7eba30987ae5c5"
-// })
+db.Attendance.create({
+// Test1firstname
+  studentID: "5de14255ec0d993a8c2d4ba3",
+// Test1classtitle
+  classID: "5de14255ec0d993a8c2d4ba4"
+})
 
 //Update Student with Class Attended
 //NEEDS WORK! 
-db.Student.findOneAndUpdate({
-  'contactinfo.email': "ren@mail.com"
-}, 
-{$push: {'classes.attended': "5ddeca3287fea5345035817b" }}).then( (err,data)=>console.log(err, data))
+// db.Student.findOneAndUpdate({
+//   'contactinfo.email': "Test1email@mail.com"
+// }, 
+// {$push: {'classes.attended': "5ddeca3287fea5345035817b" }}).then( (err,data)=>console.log(err, data))
 
 
 
