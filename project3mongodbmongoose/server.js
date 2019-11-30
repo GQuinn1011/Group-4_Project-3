@@ -18,6 +18,18 @@ const Student = require('./models/student')
 
 app.use(routes);
 
+//Route to See All in Students Collection  
+app.get("/all", function(req, res) {
+  // From Student model, find every student in db
+ Student.find({})
+    .then(function(dbStudent) {
+      res.json(dbStudent);
+    })
+    .catch(function(err) {
+      res.json(err);
+    });
+});
+
 
 mongoose.Promise = Promise;
 mongoose.connect(
@@ -38,20 +50,20 @@ db.Class.create({
   title: "Test1classtitle"
 })
 
-//Have a Student Attend a Class
-db.Attendance.create({
-// Test1firstname
-  studentID: "5de14255ec0d993a8c2d4ba3",
-// Test1classtitle
-  classID: "5de14255ec0d993a8c2d4ba4"
-})
+// //Have a Student Attend a Class
+// db.Attendance.create({
+// // Test1firstname
+//   studentID: " ",
+// // Test1classtitle
+//   classID: " "
+// })
 
 //Update Student with Class Attended
 //NEEDS WORK! 
 // db.Student.findOneAndUpdate({
 //   'contactinfo.email': "Test1email@mail.com"
 // }, 
-// {$push: {'classes.attended': "5ddeca3287fea5345035817b" }}).then( (err,data)=>console.log(err, data))
+// {$push: {'classes.attended': " " }}).then( (err,data)=>console.log(err, data))
 
 
 
