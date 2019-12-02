@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const routes = require('./routes');
-const db= require("./models")
+const db = require("./models")
 const Student = require('./models/student');
 const Class = require('./models/class');
 
@@ -20,26 +20,26 @@ app.use(routes);
 
 //Route to See All in Students Collection  
 //add 'require' at top of document
-app.get("/all", function(req, res) {
+app.get("/all", function (req, res) {
   // From Student model, find every student in db
- Student.find({})
-    .then(function(dbStudent) {
+  Student.find({})
+    .then(function (dbStudent) {
       res.json(dbStudent);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       res.json(err);
     });
 });
 
 //Route to See All in Class Collection  
 //add 'require' at top of document
-app.get("/class", function(req, res) {
+app.get("/class", function (req, res) {
   // From Class model, find every class in db
- Class.find({})
-    .then(function(dbClass) {
+  Class.find({})
+    .then(function (dbClass) {
       res.json(dbClass);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       res.json(err);
     });
 });
@@ -52,46 +52,13 @@ mongoose.connect(
 );
 
 //Create a Student 
-// db.Student.create({
-//   contactinfo: {
-//     firstname: "Student FN 1",
-//     lastname: "Student LN 1",
-//     phonenumber: '908-763-1844',
-//     email: "student1@mail.com",
-//   },
-//   payment: {
-//     cash: true,
-//     payduealert: true
-//   },
-//   merch: {
-//     merchalert: true
-//   },
-//   competition: {
-//     competitionalert: true
-//   },
-//   other: {
-//     otheralert: true
-//   },
-//   classes: {
-//     gi: 20,
-//     nogi: 15,
-//     kickboxing: 10
-//   },
-//   rank: {
-//     belt: "white",
-//     stripes: 1
-//   },
-//   status: {
-//     active: true
-//   }
-// });
+//copy STUDENT from datafordatabase.md file
 
 //Create a Class
-// db.Class.create({
-//   title: "Mon-Tue-Fri 5pm-6pm Gi Class"
-// })
+// copy CLASS from datafordatabase.md file
 
 //Have a Student Attend a Class
+//run AFTER you have added STUDENTS and CLASSES 
 // db.Attendance.create({
 // // Use Student ID
 //   studentID: "5de532e71282712cd468e2ce",
