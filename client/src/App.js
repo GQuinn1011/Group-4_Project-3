@@ -1,27 +1,78 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { Component } from 'react';
+import Dropdown from './components/Dropdown';
 
-// TODO Replace name with different word
+class App extends Component {
+    constructor(){
+    super()
+    this.state = {
+      user: [
+        {
+          id: 0,
+          title: 'Ben',
+          selected: false,
+          key: 'user'
+        },
+        {
+          id: 1,
+          title: 'Gabe',
+          selected: false,
+          key: 'user'
+        },
+        {
+          id: 2,
+          title: 'Michael',
+          selected: false,
+          key: 'user'
+        },
+        {
+          id: 3,
+          title: 'Amir',
+          selected: false,
+          key: 'user'
+        },
+        {
+          id: 4,
+          title: 'Guest',
+          selected: false,
+          key: 'user'
+        }
+      ]
+    }
+  }
 
-import Names from "./pages/Names";
-import NoMatch from "./pages/NoMatch";
-import Nav from "./components/Nav";
+  toggleSelected = (id, key) => {
+    let temp = JSON.parse(JSON.stringify(this.state[key]))
+    temp[id].selected = !temp[id].selected
+    this.setState({
+      [key]: temp
+    })
+  }
 
+  resetThenSet = (id, key) => {
+    let temp = JSON.parse(JSON.stringify(this.state[key]))
+    temp.forEach(item => item.selected = false);
+    temp[id].selected = true;
+    this.setState({
+      [key]: temp
+    })
+  }
 
-function App() {
-  return (
-    <Router>
-      <div>
-        <Nav />
-        <Switch>
-          <Route exact path="/" component={Names} />
-          <Route exact path="/names" component={Names} />
-          <Route exact path="/names/:id" component={} />
-          <Route component={NoMatch} />
-        </Switch>
+  render() {
+    return (
+      <div className="App">
+        <p>Select your name from the dropdown box to sign in</p>
+
+        <div className="wrapper">
+
+          <Dropdown
+            title="Select User"
+            list={this.state.user}
+            resetThenSet={this.resetThenSet}
+          />
+        </div>
       </div>
-    </Router>
-  );
+    );
+  }
 }
 
 export default App;
