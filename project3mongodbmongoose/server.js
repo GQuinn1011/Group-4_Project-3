@@ -51,24 +51,24 @@ mongoose.connect(
 // })
 
 //Have a Student Attend a Class
-db.Attendance.create({
-// Test1firstname
-  studentID: "5de2a3bca5cd75344cefd057",
-// Test1classtitle
-  classID: "5de2a3bca5cd75344cefd058"
-}).then((data)=>{
-  console.log( data)
-  //Update Student with Class Attended
-  db.Student.findOneAndUpdate({
-    'contactinfo.email': "Test1email@mail.com"
-  }, 
-  {$push: {'classes.attended': data._id }}).then( (err2,data2)=>console.log("2",err2, data2))
-  //Update Class with Student Attended
-  db.Class.findOneAndUpdate({
-    _id: "5de2a3bca5cd75344cefd058"
-  },
-  {$push: {'attendance': data._id }}).then( (err3,data3)=>console.log("3",err3, data3))
-  })
+// db.Attendance.create({
+// // Test1firstname
+//   studentID: "5de2a3bca5cd75344cefd057",
+// // Test1classtitle
+//   classID: "5de2a3bca5cd75344cefd058"
+// }).then((data)=>{
+//   console.log( data)
+//   //Update Student with Class Attended
+//   db.Student.findOneAndUpdate({
+//     'contactinfo.email': "Test1email@mail.com"
+//   }, 
+//   {$push: {'classes.attended': data._id }}).then( (err2,data2)=>console.log("2",err2, data2))
+//   //Update Class with Student Attended
+//   db.Class.findOneAndUpdate({
+//     _id: "5de2a3bca5cd75344cefd058"
+//   },
+//   {$push: {'attendance': data._id }}).then( (err3,data3)=>console.log("3",err3, data3))
+//   })
 
 
 app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
