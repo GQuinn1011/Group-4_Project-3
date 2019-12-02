@@ -1,22 +1,20 @@
 import axios from "axios";
 
-// TODO Replace name with different word
-
 export default {
-  // Gets all names
-  getNames: function() {
-    return axios.get("/api/names");
+  // Gets all posts
+  getPosts: function() {
+    return axios.get("/api/posts");
   },
-  // Gets the name with the given id
-  getName: function(id) {
-    return axios.get("/api/names/" + id);
+  // Gets the post with the given id
+  getPost: function(id) {
+    return axios.get("/api/posts/" + id);
   },
-  // Deletes the name with the given id
-  deleteName: function(id) {
-    return axios.delete("/api/names/" + id);
+  // Deletes the post with the given id
+  deletePost: function(id) {
+    return axios.delete("/api/posts/" + id);
   },
-  // Saves a name to the database
-  saveName: function(nameData) {
-    return axios.post("/api/names", nameData);
+  // Saves a post to the database
+  savePost: function(postData) {
+    return axios.post("/api/posts", postData);
   }
 };

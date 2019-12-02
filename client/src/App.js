@@ -1,23 +1,14 @@
-import React from "react";
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
-// TODO Replace name with different word
-
-import Names from "./pages/Names";
-import NoMatch from "./pages/NoMatch";
-import Nav from "./components/Nav";
-
+import Home from "./pages/Home"
 
 function App() {
   return (
     <Router>
       <div>
-        <Nav />
         <Switch>
-          <Route exact path="/" component={Names} />
-          <Route exact path="/names" component={Names} />
-          <Route exact path="/names/:id" component={} />
-          <Route component={NoMatch} />
+          <Route exact path="/" Component={Home} />
+          <Route exact path="/home" Component={Home} />
         </Switch>
       </div>
     </Router>
