@@ -1,52 +1,116 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const routes = require('./routes');
-const db = require("./models")
-const Student = require('./models/student');
-const Class = require('./models/class');
+const mongoose = require('mongoose')
+const express = require('express')
+const bodyParser = require('body-parser')
 const AdminBro = require('admin-bro')
-const AdminBroExpress = require('admin-bro-expressjs')
-const AdminBroMongoose = require('admin-bro-mongoose')
-
-AdminBro.registerAdapter(AdminBroMongoose)
-
-const app = express();
+const AdminBroExpressjs = require('admin-bro-expressjs')
+// We have to tell AdminBro that we will manage mongoose resources with it
+AdminBro.registerAdapter(require('admin-bro-mongoose'))
+// express server definition
+const app = express()
+app.use(bodyParser.json())
+// Resources definitions
 const User = mongoose.model('User', { name: String, email: String, surname: String })
 const Admin = mongoose.model('Admin', { name: String, email: String})
-const AdminBroOptions = {
-  resources: [User],
-}
+const Student = mongoose.model('Student', {contactinfo: {firstname: String, lastname: String, 
+phonenumber: String,
+  email: String},
+payment: {
+  cash: {
+      type: Boolean,
+      default: false
+  },
+  directdeposit: {
+      type: Boolean,
+      default: false
+  },
+  payduealert: {
+      type: Boolean,
+      default: false
+  }
+},
+merch: {
+  merchalert: {
+      type: Boolean,
+      default: false
+  }
+},
+competition: {
+  competitionalert: {
+      type: Boolean,
+      default: false
+  }
+},
+other: {
+  otheralert: {
+      type: Boolean,
+      default: false
+  }
+},
+classes: {
+  attended: String,
+  gi: {
+      type: Number,
+      default: 0
+  },
+  nogi: {
+      type: Number,
+      default: 0
+  },
+  kickboxing: {
+      type: Number,
+      default: 0
+  }
+},
+rank: {
+  belt: {
+      type: String,
+      default: "white"
+  },
+  stripes: {
+      type: Number,
+      default: 0
+  },
+  dateoflastpromotion: {
+      type: Date,
+      default: Date.now
+  },
+},
+status: {
+  active: {
+      type: Boolean,
+      default: false
+  }}})
+// Routes definitions
+app.get('/', (req, res) => res.send('Hello World!'))
+// Route which returns last 100 users from the database
+app.get('/users', async (req, res) => {
+  const users = await User.find({}).limit(10)
+  res.send(users)
+})
+// Route which creates new user
+app.post('/users', async (req, res) => {
+  const user = await new User(req.body.user).save()
+  res.send(user)
+})
+app.get('/all', async (req, res) => {
+  const students = await Student.find({}).limit(10)
+  res.send(students)
+})
+// Pass all configuration settings to AdminBro
 const adminBro = new AdminBro({
-  databases: [],
+  resources: [User, Student, Admin],
   rootPath: '/admin',
 })
-const router = AdminBroExpress.buildRouter(adminBro)
-app.use(adminBro.options.rootPath, router)
-app.listen(8080, () => console.log('AdminBro is under localhost:8080/admin'))
-const PORT = process.env.PORT || 3001;
-
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
-
-// // This is for production use only
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static('client/build'));
-// }
-
-app.use(routes);
-
-//Route to See All in Students Collection  
-//add 'require' at top of document
-app.get("/all", function (req, res) {
-  // From Student model, find every student in db
-  Student.find({})
-    .then(function (dbStudent) {
-      res.json(dbStudent);
-    })
-    .catch(function (err) {
-      res.json(err);
-    });
-});
+// app.get("/all", function (req, res) {
+//   // From Student model, find every student in db
+//   Student.find({})
+//     .then(function (dbStudent) {
+//       res.json(dbStudent);
+//     })
+//     .catch(function (err) {
+//       res.json(err);
+//     });
+// });
 
 //Route to See All in Class Collection  
 //add 'require' at top of document
@@ -61,19 +125,30 @@ app.get("/class", function (req, res) {
     });
 });
 
+// Build and use a router which will handle all AdminBro routes
+const router = AdminBroExpressjs.buildRouter(adminBro)
+app.use(adminBro.options.rootPath, router)
+// Running the server
 
 mongoose.Promise = Promise;
 const run = async () => {
   const mongooseDb = await mongoose.connect(
   process.env.MONGODB_URI || 'mongodb://localhost:27017/project3',
-  { useNewUrlParser: true }
-);
- // Passing resources by giving entire database
- const AdminBro1 = new AdminBro({
-  databases: [mongooseDb],
-  //... other AdminBroOptions
-});
+  { useNewUrlParser: true,
+    useUnifiedTopology: true
+    })
+    .then(() => console.log('DB Connected!'))
+    .catch(err => {
+    console.log('DB Connection Error:');
+    });
+
+  await app.listen(8080, () => console.log(`Example app listening on port 8080!`))
 }
+//add 'require' at top of document
+
+
+ // Passing resources by giving entire database
+
 // 
 run()
 
@@ -105,4 +180,4 @@ run()
 //   })
 
 
-app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
+// app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
