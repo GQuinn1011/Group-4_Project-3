@@ -7,79 +7,17 @@ const AdminBroExpressjs = require('admin-bro-expressjs')
 AdminBro.registerAdapter(require('admin-bro-mongoose'))
 // express server definition
 const app = express()
+const cors= require("cors")//middleware to share resources
+app.use(cors())
 app.use(bodyParser.json())
 // Resources definitions
 const User = mongoose.model('User', { name: String, email: String, surname: String })
 const Admin = mongoose.model('Admin', { name: String, email: String})
-const Student = mongoose.model('Student', {contactinfo: {firstname: String, lastname: String, 
-phonenumber: String,
-  email: String},
-payment: {
-  cash: {
-      type: Boolean,
-      default: false
-  },
-  directdeposit: {
-      type: Boolean,
-      default: false
-  },
-  payduealert: {
-      type: Boolean,
-      default: false
-  }
-},
-merch: {
-  merchalert: {
-      type: Boolean,
-      default: false
-  }
-},
-competition: {
-  competitionalert: {
-      type: Boolean,
-      default: false
-  }
-},
-other: {
-  otheralert: {
-      type: Boolean,
-      default: false
-  }
-},
-classes: {
-  attended: String,
-  gi: {
-      type: Number,
-      default: 0
-  },
-  nogi: {
-      type: Number,
-      default: 0
-  },
-  kickboxing: {
-      type: Number,
-      default: 0
-  }
-},
-rank: {
-  belt: {
-      type: String,
-      default: "white"
-  },
-  stripes: {
-      type: Number,
-      default: 0
-  },
-  dateoflastpromotion: {
-      type: Date,
-      default: Date.now
-  },
-},
-status: {
-  active: {
-      type: Boolean,
-      default: false
-  }}})
+//import from models
+const db= require("./models")
+const Student= db.Student
+const Class = db.Class
+
 // Routes definitions
 app.get('/', (req, res) => res.send('Hello World!'))
 // Route which returns last 100 users from the database
