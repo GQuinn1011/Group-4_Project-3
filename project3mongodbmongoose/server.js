@@ -53,27 +53,29 @@ mongoose.connect(
 
 //Create a Student 
 //copy STUDENT from datafordatabase.md file
+//STUDENT
 
 //Create a Class
 // copy CLASS from datafordatabase.md file
 
-//Have a Student Attend a Class
-//run AFTER you have added STUDENTS and CLASSES 
+
+// //Have a Student Attend a Class
+// //to be ran AFTER you have added STUDENTS and CLASSES 
 // db.Attendance.create({
-// // Use Student ID
-//   studentID: "5de532e71282712cd468e2ce",
-// // Use Class ID
-//   classID: "5de534c14bc8742e1ce9c7a6",
+// // Use a Student's ID
+//   studentID: " ",
+// // Use a Class's ID
+//   classID: " ",
 // }).then((data)=>{
-//   console.log( data)
-//   //Update Student with Class Attended - Using Student's Email 
+//   console.log(data)
+// //Update Student with Class Attended - Using Student's Email 
 //   db.Student.findOneAndUpdate({
-//     'contactinfo.email': "student1@mail.com"
+//     'contactinfo.email': " "
 //   }, 
 //   {$push: {'classes.attended': data._id }}).then( (err2,data2)=>console.log("2", err2, data2))
-//   //Update Class with Student Attended - Use Class ID 
+// //Update Class with Student Attended - Use Class ID 
 //   db.Class.findOneAndUpdate({
-//     _id: "5de534c14bc8742e1ce9c7a6"
+//     _id: " "
 //   },
 //   {$push: {'attendance': data._id }}).then( (err3,data3)=>console.log("3", err3, data3))
 //   })
