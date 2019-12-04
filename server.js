@@ -17,6 +17,7 @@ const Admin = mongoose.model('Admin', { name: String, email: String})
 const db= require("./models")
 const Student= db.Student
 const Class = db.Class
+const Attendance = db.Attendance
 
 // Routes definitions
 app.get('/', (req, res) => res.send('Hello World!'))
@@ -36,7 +37,7 @@ app.get('/all', async (req, res) => {
 })
 // Pass all configuration settings to AdminBro
 const adminBro = new AdminBro({
-  resources: [User, Student, Admin],
+  resources: [User, Student, Admin, Attendance],
   rootPath: '/admin',
 })
 // app.get("/all", function (req, res) {
@@ -96,23 +97,24 @@ run()
 //Create a Class
 // copy CLASS from datafordatabase.md file
 
+
 //Have a Student Attend a Class
 //run AFTER you have added STUDENTS and CLASSES 
 // db.Attendance.create({
 // // Use Student ID
-//   studentID: "5de532e71282712cd468e2ce",
+//   studentID: "5de6740b88ea0c2760b914e1",
 // // Use Class ID
-//   classID: "5de534c14bc8742e1ce9c7a6",
+//   classID: "5de7eefb59d35e1de0e10633",
 // }).then((data)=>{
 //   console.log( data)
 //   //Update Student with Class Attended - Using Student's Email 
 //   db.Student.findOneAndUpdate({
-//     'contactinfo.email': "student1@mail.com"
+//     'contactinfo.email': "student2@mail.com"
 //   }, 
 //   {$push: {'classes.attended': data._id }}).then( (err2,data2)=>console.log("2", err2, data2))
 //   //Update Class with Student Attended - Use Class ID 
 //   db.Class.findOneAndUpdate({
-//     _id: "5de534c14bc8742e1ce9c7a6"
+//     _id: "5de7eefb59d35e1de0e10633"
 //   },
 //   {$push: {'attendance': data._id }}).then( (err3,data3)=>console.log("3", err3, data3))
 //   })
