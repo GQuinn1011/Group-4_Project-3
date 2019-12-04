@@ -38,7 +38,7 @@ app.get('/all', async (req, res) => {
 // Pass all configuration settings to AdminBro
 const adminBro = new AdminBro({
   resources: [User, Student, Admin, Attendance],
-  rootPath: '/admin',
+  rootPath: '/admin', 
 })
 // app.get("/all", function (req, res) {
 //   // From Student model, find every student in db
