@@ -1,22 +1,29 @@
 import React from "react";
-import { Dropdown } from "semantic-ui-react";
-// import "./Dropdown.css"
-
-const userNames = [
-  // { key: "am", value: "am", text: "Amir" },
-  // { key: "bd", value: "bd", text: "Ben" },
-  // { key: "gb", value: "gb", text: "Gabe" },
-  // { key: "ml", value: "ml", text: "Michael" }
-];
+import { Dropdown, ButtonToolbar, DropdownButton } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
 const DropdownMenu = () => (
-  <Dropdown
-    placeholder="Select Your Name"
-    fluid
-    search
-    selection
-    options={userNames}
-  />
+  <Container>
+    <Row>
+      <Col>
+        <ButtonToolbar className="justify-content-md-center">
+          {["Primary"].map(variant => (
+            <DropdownButton
+              title="Sign In Here"
+              size="lg"
+              variant={variant.toLowerCase()}
+              id="dropdown-menu-align-center"
+              key={variant}
+            >
+                <Dropdown.Item href="#/action-1">FirstName LastName</Dropdown.Item>
+                <Dropdown.Item href="#/action-2">Name 2</Dropdown.Item>
+                <Dropdown.Item href="#/action-3">Name 3</Dropdown.Item>
+            </DropdownButton>
+          ))}
+        </ButtonToolbar>
+      </Col>
+    </Row>
+  </Container>
 );
 
 export default DropdownMenu;
