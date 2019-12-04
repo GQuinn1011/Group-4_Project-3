@@ -1,1 +1,0 @@
-most of the files are copy and paste from activities please check the files that you will be working on

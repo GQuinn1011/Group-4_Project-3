@@ -1,4 +1,5 @@
-// TODO Replace name with different word
-module.exports = {
-  Name: require("./name")
-};
+module.exports={
+    Student: require("./student.js"),
+    Attendance: require("./attendance.js"),
+    Class: require('./class')
+}
