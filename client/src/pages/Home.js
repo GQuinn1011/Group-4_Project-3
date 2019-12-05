@@ -1,6 +1,6 @@
 import React from "react";
 import DropList from "../components/DropList.js";
-import "../styles/Home.css"
+import '../styles/Home.css';
 
 class Home extends React.Component {
   state = { students: [], selectedName: {} };
@@ -23,9 +23,7 @@ class Home extends React.Component {
 
   handleNameSelect = event => {
     const { value } = event.target;
-    const foundStudent = this.state.students.find(
-      student => student._id === value
-    );
+    const foundStudent = this.state.students.find(student => student._id === value)
     this.setState({ selectedName: foundStudent });
   };
 
@@ -33,13 +31,14 @@ class Home extends React.Component {
     console.log(this.state);
     return (
       <>
-        <div>{/* <h1>this is connected</h1> */}</div>
+        <div>
+          {/* <h1>this is connected</h1> */}
+        </div>
         <div>
           {this.state.students.length > 0 ? (
             <DropList
               students={this.state.students}
               handleNameSelect={this.handleNameSelect}
-              onClick={this.setRedirect}
             />
           ) : (
             <h1>Waiting for API...</h1>
