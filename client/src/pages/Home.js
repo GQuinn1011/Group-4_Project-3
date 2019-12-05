@@ -3,7 +3,7 @@ import DropList from "../components/DropList.js";
 import '../styles/Home.css';
 
 class Home extends React.Component {
-  state = { students: [], selectedName: {} };
+  state = { students: [], selectedName: {}, classNow:"" };
 
   componentDidMount() {
     console.log("App.componentDidMount");
@@ -14,6 +14,19 @@ class Home extends React.Component {
         result => {
           console.log(result);
           this.setState({ students: result }); //ALWAYS USE setState to modify state
+        },
+        error => {
+          console.log("something bad happened");
+        }
+      );
+  
+  //front end has access to the now route api 
+  fetch("http://localhost:8080/now")
+      .then(res => res.json())
+      .then(
+        result => {
+          console.log(result);
+          this.setState({ classNow: result }); //ALWAYS USE setState to modify state
         },
         error => {
           console.log("something bad happened");

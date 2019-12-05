@@ -183,7 +183,11 @@ db.Student.create({
 
 //class 1
 db.Class.create({
-  title: "Mon/Tue/Fri 5pm-6pm Gi Class"
+  title: "Mon/Tue/Fri 5pm-6pm Gi Class",
+  starttime: "5:00 pm",
+  endtime: "6:00 pm",
+  type: "gi",
+  days: ["Monday", "Tuesday", "Thursday" "Friday"]
 })
 
 //class 2

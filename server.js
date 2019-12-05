@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const moment = require('moment')
 const express = require('express')
 const bodyParser = require('body-parser')
 const AdminBro = require('admin-bro')
@@ -64,6 +65,32 @@ app.get("/class", function (req, res) {
     });
 });
 
+app.get("/now", function (req, res) {
+  // From Class model, moment.js magic
+  Class.find({})
+    .then(function (dbClass) {
+      console.log(dbClass)
+      for(let i=0; i<dbClass.length; i++){
+        console.log(dbClass[i].title)
+        console.log(moment())
+        console.log(moment(dbClass[i].starttime,"h:mm a"))//.subtract(15, "m"))
+        console.log(moment(dbClass[i].endtime,"h:mm a"))//.add(15, "m"))
+        if(moment().isBetween(moment(dbClass[i].starttime, "h:mm a").subtract(15, "m"), moment(dbClass[i].endtime, "h:mm a").add(15, "m"))){
+          console.log("its happening")
+          if(dbClass[i].days.includes(moment().format("dddd"))){
+            console.log("today")
+            res.json({title:dbClass[i].title})
+            break
+          }
+        }
+        res.json("nothing yet")
+      }
+    })
+    .catch(function (err) {
+      res.json(err);
+    });
+});
+
 // Build and use a router which will handle all AdminBro routes
 const router = AdminBroExpressjs.buildRouter(adminBro)
 app.use(adminBro.options.rootPath, router)
@@ -96,6 +123,8 @@ run()
 
 //Create a Class
 // copy CLASS from datafordatabase.md file
+//class 1
+
 
 
 //Have a Student Attend a Class
