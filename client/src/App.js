@@ -1,11 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-//import { RecordsTable } from 'admin-bro';
+import DropList from './components/DropList'
 
 class App extends React.Component {
 
-  state = { students: [] };
+  state = { students: [], selectedName: '' };
 
   componentDidMount() {
     console.log('App.componentDidMount');
@@ -17,37 +16,34 @@ class App extends React.Component {
           console.log(result)
           this.setState({ students: result })//ALWAYS USE setState to modify state
         },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
         (error) => {
           console.log("something bad happened")
         }
       )
   }
-  whenclicked() {
-    console.log(this)
+
+  handleNameSelect = event => {
+    const { value } = event.target
+    this.setState({ selectedName: value })
   }
 
   render() {
     console.log(this.state)
     return (
-      <div>
+      <>
+        <div>
 
-        <h1>this is connected</h1>
-        <select>
-        {this.state.students.length > 0 ? (
-          this.state.students.map(student => {
-            return (
-              
-                <option value={student.contactinfo.firstname}>{student.contactinfo.firstname}</option>
-                              
-            )
-          })
-        ) : null}
-        </select>
+          <h1>this is connected</h1>
+          
+        </div>
+        <div>
+          {this.state.students.length > 0 ? (
+            <DropList students={this.state.students} handleNameSelect={this.handleNameSelect} />
 
-      </div>
+          ) : (<h1>Waiting for API...</h1>)}
+        </div>
+      </>
+
     );
   }
 }
