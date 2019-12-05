@@ -19,7 +19,7 @@ const DropList = (props) => {
   return (
     <Dropdown isOpen={dropdownOpen} toggle={toggle}>
       <DropdownToggle caret>
-        Dropdown
+        Students Sign In
         </DropdownToggle>
       <DropdownMenu>
         { onlyContactInfo.map(({firstname, lastname, email}) => {

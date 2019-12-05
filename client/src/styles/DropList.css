@@ -1,12 +1,15 @@
 body {
     background: url("../images/background.png");
+    background-repeat: no-repeat;
+    background-size: auto;
 }
 
 h1 {
     text-align: center;
-    color: bisque;
+    color: grey;
 }
 
 .dropdown {
     text-align: center;
+    padding-top: 15%;
 }
