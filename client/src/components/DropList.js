@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 const DropList = (props) => {
-  console.log(props)
+  //console.log(props)
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const mapStudents = () => {
@@ -12,7 +12,7 @@ const DropList = (props) => {
   }
 
   const onlyContactInfo = mapStudents()
-  console.log(onlyContactInfo)
+  //console.log(onlyContactInfo)
   const toggle = () => setDropdownOpen(prevState => !prevState);
 
   return (

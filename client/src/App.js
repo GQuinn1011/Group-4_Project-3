@@ -7,13 +7,13 @@ class App extends React.Component {
   state = { students: [], selectedName: '' };
 
   componentDidMount() {
-    console.log('App.componentDidMount');
+    //console.log('App.componentDidMount');
 
     fetch("http://localhost:8080/all")
       .then(res => res.json())
       .then(
         (result) => {
-          console.log(result)
+          //console.log(result)
           this.setState({ students: result })//ALWAYS USE setState to modify state
         },
         (error) => {
@@ -29,6 +29,7 @@ class App extends React.Component {
 
   render() {
     console.log(this.state)
+    //selectedName
     return (
       <>
         <div>
