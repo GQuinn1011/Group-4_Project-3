@@ -1,5 +1,6 @@
 import React from "react";
 import DropList from "../components/DropList.js";
+import '../styles/Home.css';
 
 class Home extends React.Component {
   state = { students: [], selectedName: {} };

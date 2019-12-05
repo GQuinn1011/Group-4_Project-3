@@ -1,12 +1,4 @@
-body {
-    background: url("../images/background.png");
-}
-
-h1 {
-    text-align: center;
-    color: bisque;
-}
-
 .dropdown {
     text-align: center;
+    padding-top: 15%;
 }

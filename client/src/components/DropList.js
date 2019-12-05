@@ -17,8 +17,8 @@ const DropList = (props) => {
   const toggle = () => setDropdownOpen(prevState => !prevState);
 
   return (
-    <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-      <DropdownToggle caret>
+    <Dropdown isOpen={dropdownOpen} toggle={toggle} size='lg'>
+      <DropdownToggle color='primary' caret>
         Select Your Name
         </DropdownToggle>
       <DropdownMenu>
