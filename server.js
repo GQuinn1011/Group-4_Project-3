@@ -17,6 +17,8 @@ const Admin = mongoose.model('Admin', { name: String, email: String})
 const db= require("./models")
 const Student= db.Student
 const Class = db.Class
+const Attendance = db.Attendance
+const Administrator = db.Administrator
 
 // Routes definitions
 app.get('/', (req, res) => res.send('Hello World!'))
@@ -25,6 +27,16 @@ app.get('/users', async (req, res) => {
   const users = await User.find({}).limit(10)
   res.send(users)
 })
+app.get('/student/:id', function(req, res) {
+  db.Student.findOne({ _id: req.params.id })
+      .populate("Attendance")
+      .then(function(dbStudent) {
+          res.render("Attendance", { contactinfo: dbStudent });
+      })
+      .catch(function(err) {
+          res.json(err);
+      });
+});
 // Route which creates new user
 app.post('/users', async (req, res) => {
   const user = await new User(req.body.user).save()
@@ -36,8 +48,13 @@ app.get('/all', async (req, res) => {
 })
 // Pass all configuration settings to AdminBro
 const adminBro = new AdminBro({
-  resources: [User, Student, Admin],
+  resources: [User, Student, Admin, Attendance, Class],
   rootPath: '/admin',
+  loginPath: '/xyz-admin/sign-in',
+  logoutPath: '/xyz-admin/exit',
+  branding: {
+    companyName: 'MAD-Q Inc.',
+  }
 })
 // app.get("/all", function (req, res) {
 //   // From Student model, find every student in db
@@ -80,7 +97,7 @@ const run = async () => {
     console.log('DB Connection Error:');
     });
 
-  await app.listen(8080, () => console.log(`Example app listening on port 8080!`))
+  await app.listen(8080, () => console.log(`Admin app listening on port 8080/admin!`))
 }
 //add 'require' at top of document
 
@@ -92,7 +109,6 @@ run()
 
 //Create a Student 
 //copy STUDENT from datafordatabase.md file
-
 //Create a Class
 // copy CLASS from datafordatabase.md file
 
@@ -100,21 +116,21 @@ run()
 //run AFTER you have added STUDENTS and CLASSES 
 // db.Attendance.create({
 // // Use Student ID
-//   studentID: "5de532e71282712cd468e2ce",
+//   studentID: "5de68470a6a548384fbf7136",
 // // Use Class ID
-//   classID: "5de534c14bc8742e1ce9c7a6",
+//   classID: "5de7f7411143264d7863025d",
 // }).then((data)=>{
 //   console.log( data)
 //   //Update Student with Class Attended - Using Student's Email 
 //   db.Student.findOneAndUpdate({
 //     'contactinfo.email': "student1@mail.com"
 //   }, 
-//   {$push: {'classes.attended': data._id }}).then( (err2,data2)=>console.log("2", err2, data2))
+//   {$push: {'classes.attended': data._id.title }}).then( (err2,data2)=>console.log("2", err2, data2))
 //   //Update Class with Student Attended - Use Class ID 
 //   db.Class.findOneAndUpdate({
-//     _id: "5de534c14bc8742e1ce9c7a6"
+//     _id: "5de7f7411143264d7863025d"
 //   },
-//   {$push: {'attendance': data._id }}).then( (err3,data3)=>console.log("3", err3, data3))
+//   {$push: {'attendance': data._id.title }}).then( (err3,data3)=>console.log("3", err3, data3))
 //   })
 
 

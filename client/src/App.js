@@ -37,7 +37,7 @@ class App extends React.Component {
         {this.state.students.length > 0 ? (
           this.state.students.map(student => {
             return (
-              <h6 onClick={this.whenclicked}>{student.contactinfo.firstname}</h6>
+              <h6 onClick={this.whenclicked}>{student.contactinfo.firstname}  {student.contactinfo.lastname}</h6>
             )
           })
         ) : null}
