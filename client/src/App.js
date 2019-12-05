@@ -34,13 +34,17 @@ class App extends React.Component {
       <div>
 
         <h1>this is connected</h1>
+        <select>
         {this.state.students.length > 0 ? (
           this.state.students.map(student => {
             return (
-              <h6 onClick={this.whenclicked}>{student.contactinfo.firstname}</h6>
+              
+                <option value={student.contactinfo.firstname}>{student.contactinfo.firstname}</option>
+                              
             )
           })
         ) : null}
+        </select>
 
       </div>
     );
