@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import "../styles/DropList.css";
 
 const DropList = (props) => {
   console.log(props)

@@ -1,49 +1,25 @@
-import React from 'react';
-import './App.css';
-import DropList from './components/DropList'
+import React from "react";
+// import './App.css';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Home from "./pages/Home";
+import NoMatch from "./pages/NoMatch.js";
+//import { RecordsTable } from 'admin-bro';
 
 class App extends React.Component {
 
-  state = { students: [], selectedName: '' };
-
-  componentDidMount() {
-    console.log('App.componentDidMount');
-
-    fetch("http://localhost:8080/all")
-      .then(res => res.json())
-      .then(
-        (result) => {
-          console.log(result)
-          this.setState({ students: result })//ALWAYS USE setState to modify state
-        },
-        (error) => {
-          console.log("something bad happened")
-        }
-      )
-  }
-
-  handleNameSelect = event => {
-    const { value } = event.target
-    this.setState({ selectedName: value })
-  }
-
   render() {
-    console.log(this.state)
     return (
-      <>
-        <div>
-
-          <h1>this is connected</h1>
-          
-        </div>
-        <div>
-          {this.state.students.length > 0 ? (
-            <DropList students={this.state.students} handleNameSelect={this.handleNameSelect} />
-
-          ) : (<h1>Waiting for API...</h1>)}
-        </div>
-      </>
-
+      <div>
+        <Router>
+          <div>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/Home" component={Home} />
+              <Route component={NoMatch} />
+            </Switch>
+          </div>
+        </Router>
+      </div>
     );
   }
 }
