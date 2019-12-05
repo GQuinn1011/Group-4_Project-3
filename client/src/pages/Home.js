@@ -2,7 +2,7 @@ import React from "react";
 import DropList from "../components/DropList.js";
 
 class Home extends React.Component {
-  state = { students: [], selectedName: "" };
+  state = { students: [], selectedName: {} };
 
   componentDidMount() {
     console.log("App.componentDidMount");
@@ -22,7 +22,8 @@ class Home extends React.Component {
 
   handleNameSelect = event => {
     const { value } = event.target;
-    this.setState({ selectedName: value });
+    const foundStudent = this.state.students.find(student => student._id === value)
+    this.setState({ selectedName: foundStudent });
   };
 
   render() {
