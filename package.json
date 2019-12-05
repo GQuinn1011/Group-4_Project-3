@@ -1,29 +1,33 @@
 {
-  "name": "project3",
+  "name": "project3mongodbmongoose",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "scripts": {
+    "start": "if-env NODE_ENV='production' && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon server.js --ignore 'client/*'\" \"npm run client\" ",
+    "install": "cd client && npm install",
+    "client": "cd client && npm run start",
+    "build": "cd client && npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^4.7.1",
     "admin-bro": "^1.4.2",
     "admin-bro-expressjs": "^0.3.0",
     "admin-bro-mongoose": "^0.3.0",
-    "axios": "^0.19.0",
+    "bootstrap": "^4.4.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "if-env": "^1.0.4",
-    "mongoose": "^5.7.13"
+    "mongoose": "^5.7.12",
+    "nodemon": "^2.0.1",
+    "react-bootstrap": "^1.0.0-beta.16"
   },
   "devDependencies": {
     "concurrently": "^5.0.0",
-    "nodemon": "^2.0.1"
-  },
-  "scripts": {
-    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:prod": "node server.js",
-    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
-    "client": "cd client && npm run start",
-    "install": "cd client && npm install",
-    "build": "cd client && npm run build"
-  },
-  "author": "",
-  "license": "ISC"
+    "if-env": "^1.0.4"
+  }
 }

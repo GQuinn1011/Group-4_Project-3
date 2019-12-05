@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 export class SignedIn extends Component {
     render() {
         return (
-            <div>
-                
-            </div>
+            <>
+            <h1>You Are Now Signed In</h1>                
+            </>
         )
     }
 }
