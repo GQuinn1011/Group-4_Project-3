@@ -72,11 +72,23 @@ app.get("/class", function (req, res) {
     });
 });
 
+//Route to See All in Attendance Collection  
+app.get("/attendance", function (req, res) {
+  // From Class model, find every class in db
+  Attendance.find({})
+    .then(function (dbAttendance) {
+      res.json(dbAttendance);
+    })
+    .catch(function (err) {
+      res.json(err);
+    });
+});
+
 app.get("/now", function (req, res) {
   // From Class model, the moment.js magic
   Class.find({})
     .then(function (dbClass) {
-      console.log(dbClass)
+      //console.log(dbClass)
       for(let i=0; i<dbClass.length; i++){
         //console.log(dbClass[i].title)
         //console.log(moment())
@@ -130,50 +142,6 @@ run()
 
 //Create a Class
 // copy CLASS from datafordatabase.md file
-//class 1
-db.Class.create({
-  title: "Mon/Tue/Fri 5pm-6pm Gi Class",
-  starttime: "5:00 pm",
-  endtime: "6:00 pm",
-  type: "gi",
-  days: ["Monday", "Tuesday", "Friday"]
-})
-
-//class 2
-db.Class.create({
-  title: "Mon/Sat 10am-11am Gi Class",
-  starttime: "10:00 am",
-  endtime: "11:00 am",
-  type: "gi",
-  days: ["Monday", "Saturday"]
-})
-
-//class 3
-db.Class.create({
-  title: "Thurs 5pm-6pm NoGi Class",
-  starttime: "5:00 pm",
-  endtime: "6:00 pm",
-  type: "nogi",
-  days: "Thursday"
-})
-
-//class 4
-db.Class.create({
-  title: "Tue/Sun 10am-11am NoGi Class",
-  starttime: "10:00 am",
-  endtime: "11:00 am",
-  type: "nogi",
-  days: ["Tuesday", "Sunday"]
-})
-
-//class 5
-db.Class.create({
-  title: "Sat/Sun 9am-10am Kickboxing Class",
-  starttime: "9:00 am",
-  endtime: "10:00 am",
-  type: "kickboxing",
-  days: ["Saturday", "Sunday"]
-})
 
 
 //Have a Student Attend a Class
