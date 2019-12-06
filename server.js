@@ -59,12 +59,6 @@ const adminBro = new AdminBro({
 //     });
 // });
 
-// Pass all configuration settings to AdminBro
-// const adminBro = new AdminBro({
-//   resources: [User, Student, Admin, Attendance],
-//   rootPath: '/admin', 
-// })
-
 //Route to See All in Class Collection  
 //add 'require' at top of document
 app.get("/class", function (req, res) {
@@ -136,14 +130,50 @@ run()
 
 //Create a Class
 // copy CLASS from datafordatabase.md file
-//class TEST
-// db.Class.create({
-//   title: "Tue/Fri 9am-6pm TEST Gi Class",
-//   starttime: "9:00 am",
-//   endtime: "6:00 pm",
-//   type: "gi",
-//   days: ["Tuesday", "Friday"]
-// })
+//class 1
+db.Class.create({
+  title: "Mon/Tue/Fri 5pm-6pm Gi Class",
+  starttime: "5:00 pm",
+  endtime: "6:00 pm",
+  type: "gi",
+  days: ["Monday", "Tuesday", "Friday"]
+})
+
+//class 2
+db.Class.create({
+  title: "Mon/Sat 10am-11am Gi Class",
+  starttime: "10:00 am",
+  endtime: "11:00 am",
+  type: "gi",
+  days: ["Monday", "Saturday"]
+})
+
+//class 3
+db.Class.create({
+  title: "Thurs 5pm-6pm NoGi Class",
+  starttime: "5:00 pm",
+  endtime: "6:00 pm",
+  type: "nogi",
+  days: "Thursday"
+})
+
+//class 4
+db.Class.create({
+  title: "Tue/Sun 10am-11am NoGi Class",
+  starttime: "10:00 am",
+  endtime: "11:00 am",
+  type: "nogi",
+  days: ["Tuesday", "Sunday"]
+})
+
+//class 5
+db.Class.create({
+  title: "Sat/Sun 9am-10am Kickboxing Class",
+  starttime: "9:00 am",
+  endtime: "10:00 am",
+  type: "kickboxing",
+  days: ["Saturday", "Sunday"]
+})
 
 
 //Have a Student Attend a Class
