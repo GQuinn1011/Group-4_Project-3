@@ -187,7 +187,7 @@ db.Class.create({
   starttime: "5:00 pm",
   endtime: "6:00 pm",
   type: "gi",
-  days: ["Monday", "Tuesday", "Thursday" "Friday"]
+  days: ["Monday", "Tuesday", "Friday"]
 })
 
 //class 2
@@ -208,4 +208,13 @@ db.Class.create({
 //class 5
 db.Class.create({
   title: "Sat/Sun 9am-10am Kickboxing Class"
+})
+
+//class TEST
+db.Class.create({
+  title: "Tue/Fri 9am-6pm TEST Gi Class",
+  starttime: "9:00 am",
+  endtime: "6:00 pm",
+  type: "gi",
+  days: ["Tuesday", "Friday"]
 })

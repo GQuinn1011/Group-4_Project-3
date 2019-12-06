@@ -12,7 +12,7 @@ class Home extends React.Component {
       .then(res => res.json())
       .then(
         result => {
-          console.log(result);
+          //console.log(result);
           this.setState({ students: result }); //ALWAYS USE setState to modify state
         },
         error => {
@@ -20,12 +20,12 @@ class Home extends React.Component {
         }
       );
   
-  //front end has access to the now route api 
+  //front end has access to the Now Route api 
   fetch("http://localhost:8080/now")
       .then(res => res.json())
       .then(
         result => {
-          console.log(result);
+          //console.log(result);
           this.setState({ classNow: result }); //ALWAYS USE setState to modify state
         },
         error => {

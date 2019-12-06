@@ -32,15 +32,13 @@ app.post('/users', async (req, res) => {
   const user = await new User(req.body.user).save()
   res.send(user)
 })
+// Route to see All Students in Students Collection
 app.get('/all', async (req, res) => {
   const students = await Student.find({}).limit(10)
   res.send(students)
 })
-// Pass all configuration settings to AdminBro
-const adminBro = new AdminBro({
-  resources: [User, Student, Admin, Attendance],
-  rootPath: '/admin', 
-})
+
+//Original Route to see ALL Students in Student Collection
 // app.get("/all", function (req, res) {
 //   // From Student model, find every student in db
 //   Student.find({})
@@ -51,6 +49,12 @@ const adminBro = new AdminBro({
 //       res.json(err);
 //     });
 // });
+
+// Pass all configuration settings to AdminBro
+const adminBro = new AdminBro({
+  resources: [User, Student, Admin, Attendance],
+  rootPath: '/admin', 
+})
 
 //Route to See All in Class Collection  
 //add 'require' at top of document
@@ -66,15 +70,15 @@ app.get("/class", function (req, res) {
 });
 
 app.get("/now", function (req, res) {
-  // From Class model, moment.js magic
+  // From Class model, the moment.js magic
   Class.find({})
     .then(function (dbClass) {
       console.log(dbClass)
       for(let i=0; i<dbClass.length; i++){
-        console.log(dbClass[i].title)
-        console.log(moment())
-        console.log(moment(dbClass[i].starttime,"h:mm a"))//.subtract(15, "m"))
-        console.log(moment(dbClass[i].endtime,"h:mm a"))//.add(15, "m"))
+        //console.log(dbClass[i].title)
+        //console.log(moment())
+        //console.log(moment(dbClass[i].starttime,"h:mm a"))//.subtract(15, "m"))
+        //console.log(moment(dbClass[i].endtime,"h:mm a"))//.add(15, "m"))
         if(moment().isBetween(moment(dbClass[i].starttime, "h:mm a").subtract(15, "m"), moment(dbClass[i].endtime, "h:mm a").add(15, "m"))){
           console.log("its happening")
           if(dbClass[i].days.includes(moment().format("dddd"))){
@@ -94,8 +98,8 @@ app.get("/now", function (req, res) {
 // Build and use a router which will handle all AdminBro routes
 const router = AdminBroExpressjs.buildRouter(adminBro)
 app.use(adminBro.options.rootPath, router)
-// Running the server
 
+// Running the server
 mongoose.Promise = Promise;
 const run = async () => {
   const mongooseDb = await mongoose.connect(
@@ -123,8 +127,14 @@ run()
 
 //Create a Class
 // copy CLASS from datafordatabase.md file
-//class 1
-
+//class TEST
+// db.Class.create({
+//   title: "Tue/Fri 9am-6pm TEST Gi Class",
+//   starttime: "9:00 am",
+//   endtime: "6:00 pm",
+//   type: "gi",
+//   days: ["Tuesday", "Friday"]
+// })
 
 
 //Have a Student Attend a Class
