@@ -97,8 +97,8 @@ app.get("/now", function (req, res) {
         if(moment().isBetween(moment(dbClass[i].starttime, "h:mm a").subtract(15, "m"), moment(dbClass[i].endtime, "h:mm a").add(15, "m"))){
           console.log("its happening")
           if(dbClass[i].days.includes(moment().format("dddd"))){
-            console.log("today")
-            res.json({title:dbClass[i].title})
+            //console.log("today")
+            res.json({title:dbClass[i].title, _id: dbClass[i]._id})
             break
           }
         }
