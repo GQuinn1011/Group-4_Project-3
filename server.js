@@ -37,8 +37,17 @@ app.get('/all', async (req, res) => {
   const students = await Student.find({}).limit(10)
   res.send(students)
 })
-
-//Original Route to see ALL Students in Student Collection
+// Pass all configuration settings to AdminBro
+const adminBro = new AdminBro({
+  rootPath: '/admin',
+  logoutPath: '/admin/exit',
+  loginPath: '/admin/sign-in', 
+  resources: [{resource: Student, options: {listProperties: ['contactinfo.firstname', 'contactinfo.lastname', 'contactinfo.email', 'status.active', 'rank.belt' ]}}, Admin, Attendance, Class],
+  branding: {
+    companyName: 'Group 4',
+    softwareBrothers: false
+  },
+})
 // app.get("/all", function (req, res) {
 //   // From Student model, find every student in db
 //   Student.find({})
