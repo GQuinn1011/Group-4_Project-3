@@ -60,10 +60,10 @@ const adminBro = new AdminBro({
 // });
 
 // Pass all configuration settings to AdminBro
-const adminBro = new AdminBro({
-  resources: [User, Student, Admin, Attendance],
-  rootPath: '/admin', 
-})
+// const adminBro = new AdminBro({
+//   resources: [User, Student, Admin, Attendance],
+//   rootPath: '/admin', 
+// })
 
 //Route to See All in Class Collection  
 //add 'require' at top of document
