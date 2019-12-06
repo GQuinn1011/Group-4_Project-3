@@ -1,9 +1,11 @@
 import React from "react";
 import DropList from "../components/DropList.js";
-import '../styles/Home.css';
+import Button from 'react-bootstrap/Button'
+import ButtonToolbar from "react-bootstrap/ButtonToolbar"
+import "../styles/Home.css";
 
 class Home extends React.Component {
-  state = { students: [], selectedName: {}, classNow:"" };
+  state = { students: [], selectedName: {} };
 
   componentDidMount() {
     console.log("App.componentDidMount");
@@ -12,21 +14,8 @@ class Home extends React.Component {
       .then(res => res.json())
       .then(
         result => {
-          //console.log(result);
+          console.log(result);
           this.setState({ students: result }); //ALWAYS USE setState to modify state
-        },
-        error => {
-          console.log("something bad happened");
-        }
-      );
-  
-  //front end has access to the Now Route api 
-  fetch("http://localhost:8080/now")
-      .then(res => res.json())
-      .then(
-        result => {
-          //console.log(result);
-          this.setState({ classNow: result }); //ALWAYS USE setState to modify state
         },
         error => {
           console.log("something bad happened");
@@ -36,7 +25,9 @@ class Home extends React.Component {
 
   handleNameSelect = event => {
     const { value } = event.target;
-    const foundStudent = this.state.students.find(student => student._id === value)
+    const foundStudent = this.state.students.find(
+      student => student._id === value
+    );
     this.setState({ selectedName: foundStudent });
   };
 
@@ -44,9 +35,7 @@ class Home extends React.Component {
     console.log(this.state);
     return (
       <>
-        <div>
-          {/* <h1>this is connected</h1> */}
-        </div>
+        <div>{/* <h1>this is connected</h1> */}</div>
         <div>
           {this.state.students.length > 0 ? (
             <DropList
@@ -56,6 +45,24 @@ class Home extends React.Component {
           ) : (
             <h1>Waiting for API...</h1>
           )}
+        </div>
+        <div>
+          {this.state.selectedName.contactinfo && (
+            <div>
+              <h2>Is this you?</h2>
+              <p>{this.state.selectedName.contactinfo.firstname}</p>
+            </div>
+          )}
+          <div class="yesno">
+            <ButtonToolbar>
+              <Button id="yes" variant="primary" size="lg">Yes</Button>
+              <Button id="no" variant="primary" size="lg">No</Button>
+            </ButtonToolbar>
+          </div>
+          {/* <div class="yesno">
+            <button>Yes</button>
+            <button>No</button>
+          </div> */}
         </div>
       </>
     );
