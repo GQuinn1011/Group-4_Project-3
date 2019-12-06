@@ -29,7 +29,7 @@ class Home extends React.Component {
           this.setState({ classNow: result }); //ALWAYS USE setState to modify state
         },
         error => {
-          console.log("something bad happened");
+          console.log("something bad happened",error);
         }
       );
   }
@@ -38,7 +38,23 @@ class Home extends React.Component {
     const { value } = event.target;
     const foundStudent = this.state.students.find(student => student._id === value)
     this.setState({ selectedName: foundStudent });
-  };
+    const r = window.confirm(`Are you really ${foundStudent.contactinfo.firstname}?`);
+     if(r === true){ 
+       console.log("we got a confirm") 
+       const attendanceData={
+        student_id: foundStudent._id,
+        class_id: this.state.classNow._id,
+        type: this.state.classNow.type
+       }
+       console.log(attendanceData)
+       fetch('http://localhost:8080/attendance', {
+        method: 'post',
+        body: JSON.stringify(attendanceData),
+        headers: { 'Content-type': 'application/json' }
+      })
+  }
+}
+
 
   render() {
     console.log(this.state);

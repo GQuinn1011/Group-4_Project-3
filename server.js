@@ -11,6 +11,7 @@ const app = express()
 const cors= require("cors")//middleware to share resources
 app.use(cors())
 app.use(bodyParser.json())
+app.use(express.json())
 // Resources definitions
 const User = mongoose.model('User', { name: String, email: String, surname: String })
 const Admin = mongoose.model('Admin', { name: String, email: String})
@@ -98,7 +99,7 @@ app.get("/now", function (req, res) {
           console.log("its happening")
           if(dbClass[i].days.includes(moment().format("dddd"))){
             //console.log("today")
-            res.json({title:dbClass[i].title, _id: dbClass[i]._id})
+            res.json({title:dbClass[i].title, _id: dbClass[i]._id, type: dbClass[i].type})
             break
           }
         }
@@ -109,6 +110,35 @@ app.get("/now", function (req, res) {
       res.json(err);
     });
 });
+
+app.post("/attendance", function(req,res){
+  console.log("here", req.body)
+  const{student_id, class_id, type}= req.body
+    db.Attendance.create({
+      // Use Student ID
+      studentID: student_id,
+      // Use Class ID
+      classID: class_id,
+    }).then((data)=>{
+      console.log( data)
+      //Update Student with Class Attended - Using Student's Email 
+      db.Student.findOneAndUpdate({
+        _id: student_id
+      }, 
+      {
+      $push: {
+        'classes.attended': data._id 
+      },
+       $inc :{`classes.${type}`: 1 }//TODO cross the finish line
+     }
+       ).then( (err2,data2)=>console.log("2", err2, data2))
+      //Update Class with Student Attended - Use Class ID 
+      db.Class.findOneAndUpdate({
+        _id: class_id
+      },
+      {$push: {'attendance': data._id }}).then( (err3,data3)=>console.log("3", err3, data3))
+    })
+  })
 
 // Build and use a router which will handle all AdminBro routes
 const router = AdminBroExpressjs.buildRouter(adminBro)
@@ -129,12 +159,9 @@ const run = async () => {
 
   await app.listen(8080, () => console.log(`Example app listening on port 8080!`))
 }
-//add 'require' at top of document
 
+// Passing resources by giving entire database
 
- // Passing resources by giving entire database
-
-// 
 run()
 
 //Create a Student 
@@ -143,27 +170,6 @@ run()
 //Create a Class
 // copy CLASS from datafordatabase.md file
 
-
-//Have a Student Attend a Class
-//run AFTER you have added STUDENTS and CLASSES 
-// db.Attendance.create({
-// // Use Student ID
-//   studentID: "5de6740b88ea0c2760b914e1",
-// // Use Class ID
-//   classID: "5de7eefb59d35e1de0e10633",
-// }).then((data)=>{
-//   console.log( data)
-//   //Update Student with Class Attended - Using Student's Email 
-//   db.Student.findOneAndUpdate({
-//     'contactinfo.email': "student2@mail.com"
-//   }, 
-//   {$push: {'classes.attended': data._id }}).then( (err2,data2)=>console.log("2", err2, data2))
-//   //Update Class with Student Attended - Use Class ID 
-//   db.Class.findOneAndUpdate({
-//     _id: "5de7eefb59d35e1de0e10633"
-//   },
-//   {$push: {'attendance': data._id }}).then( (err3,data3)=>console.log("3", err3, data3))
-//   })
 
 
 // app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
