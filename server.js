@@ -38,8 +38,14 @@ app.get('/all', async (req, res) => {
 })
 // Pass all configuration settings to AdminBro
 const adminBro = new AdminBro({
-  resources: [User, Student, Admin, Attendance],
-  rootPath: '/admin', 
+  rootPath: '/admin',
+  logoutPath: '/admin/exit',
+  loginPath: '/admin/sign-in', 
+  resources: [{resource: Student, options: {listProperties: ['contactinfo.firstname', 'contactinfo.lastname', 'contactinfo.email', 'status.active', 'rank.belt' ]}}, Admin, Attendance, Class],
+  branding: {
+    companyName: 'Group 4',
+    softwareBrothers: false
+  },
 })
 // app.get("/all", function (req, res) {
 //   // From Student model, find every student in db
