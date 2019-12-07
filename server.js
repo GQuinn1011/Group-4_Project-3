@@ -2,19 +2,17 @@ const mongoose = require('mongoose')
 const moment = require('moment')
 const express = require('express')
 const bodyParser = require('body-parser')
-const AdminBro = require('admin-bro')
-const AdminBroExpressjs = require('admin-bro-expressjs')
-// We have to tell AdminBro that we will manage mongoose resources with it
-AdminBro.registerAdapter(require('admin-bro-mongoose'))
+const adminRouter = require('./routes/admin.router')
+
 // express server definition
 const app = express()
 const cors= require("cors")//middleware to share resources
 app.use(cors())
 app.use(bodyParser.json())
 app.use(express.json())
+app.use('/admin', adminRouter)
 // Resources definitions
-const User = mongoose.model('User', { name: String, email: String, surname: String })
-const Admin = mongoose.model('Admin', { name: String, email: String})
+
 //import from models
 const db= require("./models")
 const Student= db.Student
@@ -37,17 +35,6 @@ app.post('/users', async (req, res) => {
 app.get('/all', async (req, res) => {
   const students = await Student.find({}).limit(10)
   res.send(students)
-})
-// Pass all configuration settings to AdminBro
-const adminBro = new AdminBro({
-  rootPath: '/admin',
-  logoutPath: '/admin/exit',
-  loginPath: '/admin/sign-in', 
-  resources: [{resource: Student, options: {listProperties: ['contactinfo.firstname', 'contactinfo.lastname', 'contactinfo.email', 'status.active', 'rank.belt' ]}}, Admin, Attendance, Class],
-  branding: {
-    companyName: 'Group 4',
-    softwareBrothers: false
-  },
 })
 // app.get("/all", function (req, res) {
 //   // From Student model, find every student in db
@@ -129,7 +116,7 @@ app.post("/attendance", function(req,res){
       $push: {
         'classes.attended': data._id 
       },
-       $inc :{`classes.${type}`: 1 }//TODO cross the finish line
+       $inc :{'classes.${type}': 1 }//TODO cross the finish line
      }
        ).then( (err2,data2)=>console.log("2", err2, data2))
       //Update Class with Student Attended - Use Class ID 
@@ -139,11 +126,6 @@ app.post("/attendance", function(req,res){
       {$push: {'attendance': data._id }}).then( (err3,data3)=>console.log("3", err3, data3))
     })
   })
-
-// Build and use a router which will handle all AdminBro routes
-const router = AdminBroExpressjs.buildRouter(adminBro)
-app.use(adminBro.options.rootPath, router)
-
 // Running the server
 mongoose.Promise = Promise;
 const run = async () => {
