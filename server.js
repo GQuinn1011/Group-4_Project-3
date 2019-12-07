@@ -4,6 +4,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const AdminBro = require('admin-bro')
 const AdminBroExpressjs = require('admin-bro-expressjs')
+const bcrypt = require('bcrypt')
+const session = require('express-session')
 // We have to tell AdminBro that we will manage mongoose resources with it
 AdminBro.registerAdapter(require('admin-bro-mongoose'))
 // express server definition
@@ -13,7 +15,7 @@ app.use(cors())
 app.use(bodyParser.json())
 // Resources definitions
 const User = mongoose.model('User', { name: String, email: String, surname: String })
-const Admin = mongoose.model('Admin', { name: String, email: String})
+const Admin = mongoose.model('Admin', { name: String, email: {type: String, required: true}, password: {type: String, required: true}})
 //import from models
 const db= require("./models")
 const Student= db.Student
@@ -37,12 +39,30 @@ app.get('/all', async (req, res) => {
   const students = await Student.find({}).limit(10)
   res.send(students)
 })
+
+// const canModifyUsers = ({ currentAdmin }) => currentAdmin && currentAdmin.role === 'admin'
+
 // Pass all configuration settings to AdminBro
 const adminBro = new AdminBro({
-  rootPath: '/admin',
-  logoutPath: '/admin/exit',
-  loginPath: '/admin/sign-in', 
-  resources: [{resource: Student, options: {listProperties: ['contactinfo.firstname', 'contactinfo.lastname', 'contactinfo.email', 'status.active', 'rank.belt' ]}}, Admin, Attendance, Class],
+  databases: [mongoose],
+  rootPath:'/admin',
+  resources: [{
+    resource: Student, 
+    options: {
+      parent:{
+        name: 'Studio',
+        icon: 'fas-fa-cogs',
+      },
+      listProperties: ['contactinfo.firstname', 'contactinfo.lastname', 'contactinfo.email', 'status.active', 'rank.belt' ]
+    },
+    properties: {
+        'rank.dateoflastpromotion':{ 
+          type: 'richtext',
+      
+        }
+      
+    }
+  }, Admin, Attendance, Class],
   branding: {
     companyName: 'Group 4',
     softwareBrothers: false
@@ -97,11 +117,41 @@ app.get("/now", function (req, res) {
       res.json(err);
     });
 });
-
 // Build and use a router which will handle all AdminBro routes
-const router = AdminBroExpressjs.buildRouter(adminBro)
-app.use(adminBro.options.rootPath, router)
+const ADMIN = {
+  email: process.env.ADMIN_EMAIL || 'admin@example.com',
+  password: process.env.ADMIN_PASSWORD || 'lovejs',
+}
+const router = AdminBroExpressjs.buildAuthenticatedRouter(adminBro, {
+  cookieName: process.env.ADMIN_COOKIE_NAME || 'admin-bro',
+  cookiePassword: process.env.ADMIN_COOKIE_PASS || 'some-secret-password-used-to-secure-cookie', 
+  authenticate: async (email, password) => {
+    if (email == ADMIN.email && password == ADMIN.password) {
+      return ADMIN
+    }
+    return null
+  }})
+  app.use(adminBro.options.rootPath, router)
+    // const admin = await Admin.findOne({ email, password })
+//     if (admin) {
+//       const matched = await bcrypt.compare(password, user.encryptedPassword)
+//       if (matched) {
+//         return admin
+//       }
+//     }
+//     return false
+//   },
+  
+// })
 
+// router.use((req, res, next) => {
+//     if (req.session && req.session.admin) {
+//      req.adminUser = req.session.admin
+//       next()
+//     } else {
+//       res.redirect(adminBro.options.loginPath)
+//     }
+//   })
 // Running the server
 mongoose.Promise = Promise;
 const run = async () => {
@@ -124,56 +174,57 @@ const run = async () => {
 
 // 
 run()
-
+// const Plugin = require('./plugin')
+// module.exports = Plugin
 //Create a Student 
 //copy STUDENT from datafordatabase.md file
 
 //Create a Class
 // copy CLASS from datafordatabase.md file
 //class 1
-db.Class.create({
-  title: "Mon/Tue/Fri 5pm-6pm Gi Class",
-  starttime: "5:00 pm",
-  endtime: "6:00 pm",
-  type: "gi",
-  days: ["Monday", "Tuesday", "Friday"]
-})
+// db.Class.create({
+//   title: "Mon/Tue/Fri 5pm-6pm Gi Class",
+//   starttime: "5:00 pm",
+//   endtime: "6:00 pm",
+//   type: "gi",
+//   days: ["Monday", "Tuesday", "Friday"]
+// })
 
-//class 2
-db.Class.create({
-  title: "Mon/Sat 10am-11am Gi Class",
-  starttime: "10:00 am",
-  endtime: "11:00 am",
-  type: "gi",
-  days: ["Monday", "Saturday"]
-})
+// //class 2
+// db.Class.create({
+//   title: "Mon/Sat 10am-11am Gi Class",
+//   starttime: "10:00 am",
+//   endtime: "11:00 am",
+//   type: "gi",
+//   days: ["Monday", "Saturday"]
+// })
 
-//class 3
-db.Class.create({
-  title: "Thurs 5pm-6pm NoGi Class",
-  starttime: "5:00 pm",
-  endtime: "6:00 pm",
-  type: "nogi",
-  days: "Thursday"
-})
+// //class 3
+// db.Class.create({
+//   title: "Thurs 5pm-6pm NoGi Class",
+//   starttime: "5:00 pm",
+//   endtime: "6:00 pm",
+//   type: "nogi",
+//   days: "Thursday"
+// })
 
-//class 4
-db.Class.create({
-  title: "Tue/Sun 10am-11am NoGi Class",
-  starttime: "10:00 am",
-  endtime: "11:00 am",
-  type: "nogi",
-  days: ["Tuesday", "Sunday"]
-})
+// //class 4
+// db.Class.create({
+//   title: "Tue/Sun 10am-11am NoGi Class",
+//   starttime: "10:00 am",
+//   endtime: "11:00 am",
+//   type: "nogi",
+//   days: ["Tuesday", "Sunday"]
+// })
 
-//class 5
-db.Class.create({
-  title: "Sat/Sun 9am-10am Kickboxing Class",
-  starttime: "9:00 am",
-  endtime: "10:00 am",
-  type: "kickboxing",
-  days: ["Saturday", "Sunday"]
-})
+// //class 5
+// db.Class.create({
+//   title: "Sat/Sun 9am-10am Kickboxing Class",
+//   starttime: "9:00 am",
+//   endtime: "10:00 am",
+//   type: "kickboxing",
+//   days: ["Saturday", "Sunday"]
+// })
 
 
 //Have a Student Attend a Class
