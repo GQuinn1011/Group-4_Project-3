@@ -90,11 +90,11 @@ app.get("/now", function (req, res) {
   Class.find({})
     .then(function (dbClass) {
       //console.log(dbClass)
-      for(let i=0; i<dbClass.length; i++){
-        //console.log(dbClass[i].title)
-        //console.log(moment())
-        //console.log(moment(dbClass[i].starttime,"h:mm a"))//.subtract(15, "m"))
-        //console.log(moment(dbClass[i].endtime,"h:mm a"))//.add(15, "m"))
+      for(let i=0; i< dbClass.length; i++){
+        console.log("line 94", dbClass[i].title)
+        // console.log(moment())
+        // console.log(moment(dbClass[i].starttime,"h:mm a"))//.subtract(15, "m"))
+        // console.log(moment(dbClass[i].endtime,"h:mm a"))//.add(15, "m"))
         if(moment().isBetween(moment(dbClass[i].starttime, "h:mm a").subtract(15, "m"), moment(dbClass[i].endtime, "h:mm a").add(15, "m"))){
           console.log("its happening")
           if(dbClass[i].days.includes(moment().format("dddd"))){
@@ -128,9 +128,9 @@ app.post("/attendance", function(req,res){
       {
       $push: {
         'classes.attended': data._id 
-      },
-       $inc :{`classes.${type}`: 1 }//TODO cross the finish line
-     }
+      }}
+    //    $inc :{`classes.${type}`: 1 }//TODO cross the finish line
+    //  }
        ).then( (err2,data2)=>console.log("2", err2, data2))
       //Update Class with Student Attended - Use Class ID 
       db.Class.findOneAndUpdate({
@@ -169,6 +169,14 @@ run()
 
 //Create a Class
 // copy CLASS from datafordatabase.md file
+//class TEST
+db.Class.create({
+  title: "Sunday/Monday 11am-6pm TEST #1 Gi Class",
+  starttime: "11:00 am",
+  endtime: "6:00 pm",
+  type: "gi",
+  days: ["Sunday", "Monday"]
+})
 
 
 
