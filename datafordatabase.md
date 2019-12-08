@@ -228,9 +228,10 @@ db.Class.create({
 
 //class TEST
 db.Class.create({
-  title: "Tue/Fri 9am-6pm TEST Gi Class",
+  title: "Sunday/Monday 9am-6pm TEST #1 Gi Class",
   starttime: "9:00 am",
   endtime: "6:00 pm",
   type: "gi",
-  days: ["Tuesday", "Friday"]
+  days: ["Sunday", "Monday"]
 })
+
