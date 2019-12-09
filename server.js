@@ -8,16 +8,16 @@ const AdminBroExpressjs = require('admin-bro-expressjs')
 AdminBro.registerAdapter(require('admin-bro-mongoose'))
 // express server definition
 const app = express()
-const cors= require("cors")//middleware to share resources
+const cors = require("cors")//middleware to share resources
 app.use(cors())
 app.use(bodyParser.json())
 app.use(express.json())
 // Resources definitions
 const User = mongoose.model('User', { name: String, email: String, surname: String })
-const Admin = mongoose.model('Admin', { name: String, email: String})
+const Admin = mongoose.model('Admin', { name: String, email: String })
 //import from models
-const db= require("./models")
-const Student= db.Student
+const db = require("./models")
+const Student = db.Student
 const Class = db.Class
 const Attendance = db.Attendance
 
@@ -42,8 +42,8 @@ app.get('/all', async (req, res) => {
 const adminBro = new AdminBro({
   rootPath: '/admin',
   logoutPath: '/admin/exit',
-  loginPath: '/admin/sign-in', 
-  resources: [{resource: Student, options: {listProperties: ['contactinfo.firstname', 'contactinfo.lastname', 'contactinfo.email', 'status.active', 'rank.belt' ]}}, Admin, Attendance, Class],
+  loginPath: '/admin/sign-in',
+  resources: [{ resource: Student, options: { listProperties: ['contactinfo.firstname', 'contactinfo.lastname', 'contactinfo.email', 'status.active', 'rank.belt'] } }, Admin, Attendance, Class],
   branding: {
     companyName: 'Group 4',
     softwareBrothers: false
@@ -90,16 +90,16 @@ app.get("/now", function (req, res) {
   Class.find({})
     .then(function (dbClass) {
       //console.log(dbClass)
-      for(let i=0; i< dbClass.length; i++){
+      for (let i = 0; i < dbClass.length; i++) {
         console.log("line 94", dbClass[i].title)
         // console.log(moment())
         // console.log(moment(dbClass[i].starttime,"h:mm a"))//.subtract(15, "m"))
         // console.log(moment(dbClass[i].endtime,"h:mm a"))//.add(15, "m"))
-        if(moment().isBetween(moment(dbClass[i].starttime, "h:mm a").subtract(15, "m"), moment(dbClass[i].endtime, "h:mm a").add(5, "m"))){
+        if (moment().isBetween(moment(dbClass[i].starttime, "h:mm a").subtract(15, "m"), moment(dbClass[i].endtime, "h:mm a").add(5, "m"))) {
           console.log("its happening")
-          if(dbClass[i].days.includes(moment().format("dddd"))){
+          if (dbClass[i].days.includes(moment().format("dddd"))) {
             //console.log("today")
-            res.json({title:dbClass[i].title, _id: dbClass[i]._id, type: dbClass[i].type})
+            res.json({ title: dbClass[i].title, _id: dbClass[i]._id, type: dbClass[i].type })
             break
           }
         }
@@ -111,32 +111,39 @@ app.get("/now", function (req, res) {
     });
 });
 
-app.post("/attendance", function(req,res){
+app.post("/attendance", function (req, res) {
   console.log("here", req.body)
-  const{student_id, class_id, type}= req.body
-    db.Attendance.create({
-      // Use Student ID
-      studentID: student_id,
-      // Use Class ID
-      classID: class_id,
-    }).then((data)=>{
-      console.log( data)
-      //Update Student with Class Attended - Using Student's Email 
-      db.Student.findOneAndUpdate({
-        _id: student_id
-      }, 
+  const { student_id, class_id, type } = req.body
+  db.Attendance.create({
+    // Use Student ID
+    studentID: student_id,
+    // Use Class ID
+    classID: class_id,
+  }).then((data) => {
+    console.log(data)
+    //Update Student with Class Attended - Using Student's Email 
+    db.Student.findOneAndUpdate({
+      _id: student_id
+    },
       {
-      $push: {
-        'classes.attended': data._id 
-      }}
-    //    $inc :{`classes.${type}`: 1 }//TODO cross the finish line
-    //  }
-       ).then( (err2,data2)=>console.log("2", err2, data2))
-      //Update Class with Student Attended - Use Class ID 
-      db.Class.findOneAndUpdate({
-        _id: class_id
-      },
-      {$push: {'attendance': data._id }}).then( (err3,data3)=>console.log("3", err3, data3))
+        $push: {
+          'classes.attended': data._id
+        }
+      }).then((err2, data2) => console.log("2", err2, data2))
+    //Update Class with Student Attended - Use Class ID 
+    db.Class.findOneAndUpdate({
+      _id: class_id
+    },
+      { $push: { 'attendance': data._id } }).then((err3, data3) => console.log("3", err3, data3))
+
+    const classType = `classes.${type}`
+    db.Student.findOneAndUpdate({
+      _id: student_id
+    },
+      { $inc: {[classType]: 1 }//TODO cross the finish line
+    })
+     .then((err4, data4) => console.log("4", err4, data4))
+       
     })
   })
 
@@ -148,13 +155,14 @@ app.use(adminBro.options.rootPath, router)
 mongoose.Promise = Promise;
 const run = async () => {
   const mongooseDb = await mongoose.connect(
-  process.env.MONGODB_URI || 'mongodb://localhost:27017/project3',
-  { useNewUrlParser: true,
-    useUnifiedTopology: true
+    process.env.MONGODB_URI || 'mongodb://localhost:27017/project3',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
     })
     .then(() => console.log('DB Connected!'))
     .catch(err => {
-    console.log('DB Connection Error:');
+      console.log('DB Connection Error:');
     });
 
   await app.listen(8080, () => console.log(`Example app listening on port 8080!`))
