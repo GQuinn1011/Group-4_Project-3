@@ -3,6 +3,7 @@ const moment = require('moment')
 const express = require('express')
 const bodyParser = require('body-parser')
 const adminRouter = require('./routes/admin.router')
+const dotenv = require('dotenv')
 
 // express server definition
 const app = express()
