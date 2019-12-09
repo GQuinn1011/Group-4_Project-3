@@ -115,9 +115,10 @@ app.post("/attendance", function(req,res){
       {
       $push: {
         'classes.attended': data._id 
+      }
       },
-       $inc :{'classes.${type}': 1 }//TODO cross the finish line
-     }
+    //    $inc :{`classes.${type}`: 1 }//TODO cross the finish line
+    //  }
        ).then( (err2,data2)=>console.log("2", err2, data2))
       //Update Class with Student Attended - Use Class ID 
       db.Class.findOneAndUpdate({
@@ -155,3 +156,10 @@ run()
 
 
 // app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
+db.Class.create({
+  title: "Sunday/Monday 11am-6pm TEST #1 Gi Class",
+  starttime: "11:00 am",
+  endtime: "6:00 pm",
+  type: "gi",
+  days: ["Sunday", "Monday"]
+})

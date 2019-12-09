@@ -26,9 +26,15 @@ const adminBro = new AdminBro({
       
         }
     }
-  }, Attendance, Class],
+  },Attendance, 
+    {resource: Class,
+      options: {
+        listProperties: [
+          'title', 'type', 'days', 'starttime', 'endtime'
+        ]
+      }}],
   branding: {
-    logo: 'https://banner2.cleanpng.com/20180422/tkw/kisspng-brazilian-jiu-jitsu-grappling-logo-martial-arts-gr-jujitsu-5adc2994104124.6748904515243780040666.jpg',
+    logo: 'http://radjibarrettjiujitsu.com/static/media/rbjj-white.f25bae17.png',
     companyName: 'Group 4',
     softwareBrothers: false,
     theme,
