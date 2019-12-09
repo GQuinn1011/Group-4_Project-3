@@ -2,19 +2,15 @@ const mongoose = require('mongoose')
 const moment = require('moment')
 const express = require('express')
 const bodyParser = require('body-parser')
-const AdminBro = require('admin-bro')
-const AdminBroExpressjs = require('admin-bro-expressjs')
-// We have to tell AdminBro that we will manage mongoose resources with it
-AdminBro.registerAdapter(require('admin-bro-mongoose'))
+const adminRouter = require('./routes/admin.router')
+
 // express server definition
 const app = express()
 const cors = require("cors")//middleware to share resources
 app.use(cors())
 app.use(bodyParser.json())
 app.use(express.json())
-// Resources definitions
-const User = mongoose.model('User', { name: String, email: String, surname: String })
-const Admin = mongoose.model('Admin', { name: String, email: String })
+app.use('/admin', adminRouter)
 //import from models
 const db = require("./models")
 const Student = db.Student
@@ -28,6 +24,16 @@ app.get('/users', async (req, res) => {
   const users = await User.find({}).limit(10)
   res.send(users)
 })
+app.get('/student/:id', function(req, res) {
+  db.Student.findOne({ _id: req.params.id })
+      .populate("Attendance")
+      .then(function(dbStudent) {
+          res.render("Attendance", { contactinfo: dbStudent });
+      })
+      .catch(function(err) {
+          res.json(err);
+      });
+});
 // Route which creates new user
 app.post('/users', async (req, res) => {
   const user = await new User(req.body.user).save()
@@ -39,28 +45,8 @@ app.get('/all', async (req, res) => {
   res.send(students)
 })
 // Pass all configuration settings to AdminBro
-const adminBro = new AdminBro({
-  rootPath: '/admin',
-  logoutPath: '/admin/exit',
-  loginPath: '/admin/sign-in',
-  resources: [{ resource: Student, options: { listProperties: ['contactinfo.firstname', 'contactinfo.lastname', 'contactinfo.email', 'status.active', 'rank.belt'] } }, Admin, Attendance, Class],
-  branding: {
-    companyName: 'Group 4',
-    softwareBrothers: false
-  },
-})
-// app.get("/all", function (req, res) {
-//   // From Student model, find every student in db
-//   Student.find({})
-//     .then(function (dbStudent) {
-//       res.json(dbStudent);
-//     })
-//     .catch(function (err) {
-//       res.json(err);
-//     });
-// });
 
-//Route to See All in Class Collection  
+/
 //add 'require' at top of document
 app.get("/class", function (req, res) {
   // From Class model, find every class in db
@@ -147,10 +133,6 @@ app.post("/attendance", function (req, res) {
     })
   })
 
-// Build and use a router which will handle all AdminBro routes
-const router = AdminBroExpressjs.buildRouter(adminBro)
-app.use(adminBro.options.rootPath, router)
-
 // Running the server
 mongoose.Promise = Promise;
 const run = async () => {
@@ -165,7 +147,7 @@ const run = async () => {
       console.log('DB Connection Error:');
     });
 
-  await app.listen(8080, () => console.log(`Example app listening on port 8080!`))
+  await app.listen(8080, () => console.log(`Admin app listening on port 8080/admin!`))
 }
 
 // Passing resources by giving entire database
@@ -177,7 +159,6 @@ run()
 
 //Create a Class
 // copy CLASS from datafordatabase.md file
-
 
 
 // app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
