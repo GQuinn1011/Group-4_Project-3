@@ -95,7 +95,7 @@ app.get("/now", function (req, res) {
         // console.log(moment())
         // console.log(moment(dbClass[i].starttime,"h:mm a"))//.subtract(15, "m"))
         // console.log(moment(dbClass[i].endtime,"h:mm a"))//.add(15, "m"))
-        if(moment().isBetween(moment(dbClass[i].starttime, "h:mm a").subtract(15, "m"), moment(dbClass[i].endtime, "h:mm a").add(15, "m"))){
+        if(moment().isBetween(moment(dbClass[i].starttime, "h:mm a").subtract(15, "m"), moment(dbClass[i].endtime, "h:mm a").add(5, "m"))){
           console.log("its happening")
           if(dbClass[i].days.includes(moment().format("dddd"))){
             //console.log("today")
@@ -169,14 +169,6 @@ run()
 
 //Create a Class
 // copy CLASS from datafordatabase.md file
-//class TEST
-db.Class.create({
-  title: "Sunday/Monday 11am-6pm TEST #1 Gi Class",
-  starttime: "11:00 am",
-  endtime: "6:00 pm",
-  type: "gi",
-  days: ["Sunday", "Monday"]
-})
 
 
 
