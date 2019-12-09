@@ -20,10 +20,6 @@ const db = require("./models")
 const Student = db.Student
 const Class = db.Class
 const Attendance = db.Attendance
-<<<<<<< HEAD
-const Administrator = db.Administrator
-=======
->>>>>>> 222671eff61b7867da716473baa75fd2a0899b35
 
 // Routes definitions
 app.get('/', (req, res) => res.send('Hello World!'))
@@ -54,15 +50,6 @@ app.get('/all', async (req, res) => {
 })
 // Pass all configuration settings to AdminBro
 const adminBro = new AdminBro({
-<<<<<<< HEAD
-  resources: [User, Student, Admin, Attendance, Class],
-  rootPath: '/admin',
-  loginPath: '/xyz-admin/sign-in',
-  logoutPath: '/xyz-admin/exit',
-  branding: {
-    companyName: 'MAD-Q Inc.',
-  }
-=======
   rootPath: '/admin',
   logoutPath: '/admin/exit',
   loginPath: '/admin/sign-in',
@@ -71,7 +58,6 @@ const adminBro = new AdminBro({
     companyName: 'Group 4',
     softwareBrothers: false
   },
->>>>>>> 222671eff61b7867da716473baa75fd2a0899b35
 })
 // app.get("/all", function (req, res) {
 //   // From Student model, find every student in db
@@ -201,32 +187,6 @@ run()
 //Create a Class
 // copy CLASS from datafordatabase.md file
 
-<<<<<<< HEAD
-//Have a Student Attend a Class
-//run AFTER you have added STUDENTS and CLASSES 
-// db.Attendance.create({
-// // Use Student ID
-//   studentID: "5de68470a6a548384fbf7136",
-// // Use Class ID
-//   classID: "5de7f7411143264d7863025d",
-// }).then((data)=>{
-//   console.log( data)
-//   //Update Student with Class Attended - Using Student's Email 
-//   db.Student.findOneAndUpdate({
-//     'contactinfo.email': "student1@mail.com"
-//   }, 
-//   {$push: {'classes.attended': data._id.title }}).then( (err2,data2)=>console.log("2", err2, data2))
-//   //Update Class with Student Attended - Use Class ID 
-//   db.Class.findOneAndUpdate({
-//     _id: "5de7f7411143264d7863025d"
-//   },
-//   {$push: {'attendance': data._id.title }}).then( (err3,data3)=>console.log("3", err3, data3))
-//   })
 
 
 // app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
-=======
-
-
-// app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
->>>>>>> 222671eff61b7867da716473baa75fd2a0899b35
