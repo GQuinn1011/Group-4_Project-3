@@ -8,7 +8,7 @@ class Home extends React.Component {
   componentDidMount() {
     console.log("App.componentDidMount");
 
-    fetch("http://localhost:8080/all")
+    fetch("/all")
       .then(res => res.json())
       .then(
         result => {
@@ -21,7 +21,7 @@ class Home extends React.Component {
       );
   
   //front end has access to the Now Route api 
-  fetch("http://localhost:8080/now")
+  fetch("/now")
       .then(res => res.json())
       .then(
         result => {
@@ -47,7 +47,7 @@ class Home extends React.Component {
         type: this.state.classNow.type
        }
        console.log(attendanceData)
-       fetch('http://localhost:8080/attendance', {
+       fetch('/attendance', {
         method: 'post',
         body: JSON.stringify(attendanceData),
         headers: { 'Content-type': 'application/json' }
