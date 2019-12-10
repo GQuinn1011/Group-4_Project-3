@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const adminRouter = require('./routes/admin.router')
 const dotenv = require('dotenv')
 const session = require('express-session')
+const router  = express.Router()
 
 
 
@@ -40,13 +41,12 @@ const db = require("./models")
 const Student = db.Student
 const Class = db.Class
 const Attendance = db.Attendance
-
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}
 // Routes definitions
-app.get('/', (req, res) => res.send('Hello World!'))
-// Route which returns last 100 users from the database
-app.get('/users', async (req, res) => {
-  const users = await User.find({}).limit(10)
-  res.send(users)
+router.use((req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
 })
 app.get('/student/:id', function(req, res) {
   db.Student.findOne({ _id: req.params.id })
