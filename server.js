@@ -4,10 +4,32 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const adminRouter = require('./routes/admin.router')
 const dotenv = require('dotenv')
+const session = require('express-session')
+
+
+
+// const express = require('express');
+const app = express();
+const path = require('path');
+const port = process.env.PORT || 8080;
+//Static file declarationapp.use(express.static(path.join(__dirname, 'client/build')));
+//production modeif(process.env.NODE_ENV === 'production') {  app.use(express.static(path.join(__dirname, 'client/build')));  //  app.get('*', (req, res) => {    res.sendfile(path.join(__dirname = 'client/build/index.html'));  })}
+
+//build modeapp.get('*', (req, res) => {  res.sendFile(path.join(__dirname+'/client/public/index.html'));})
+
+//start serverapp.listen(port, (req, res) => {  console.log( `server listening on port: ${port}`);})
 
 // express server definition
-const app = express()
+// const app = express()
 const cors = require("cors")//middleware to share resources
+// app.set('trust proxy', 1) // trust first proxy
+// app.use(session({
+//   secret: 'keyboard cat',
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: { secure: true }
+// }))
+
 app.use(cors())
 app.use(bodyParser.json())
 app.use(express.json())

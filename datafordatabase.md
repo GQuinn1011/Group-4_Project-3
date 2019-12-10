@@ -210,8 +210,8 @@ db.Class.create({
 
 //class 4
 db.Class.create({
-  title: "Tue/Sun 10am-11am NoGi Class",
-  starttime: "10:00 am",
+  title: "Tue/Sun 1am-11am NoGi Class",
+  starttime: "1:00 am",
   endtime: "11:00 am",
   type: "nogi",
   days: ["Sunday", "Tuesday"]
