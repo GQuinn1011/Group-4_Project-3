@@ -171,7 +171,7 @@ const run = async () => {
       console.log('DB Connection Error:');
     });
 
-  await app.listen(8080, () => console.log(`Admin app listening on port 8080/admin!`))
+  await app.listen(PORT, () => console.log(`Admin app listening on port 8080/admin!`))
 }
 
 // Passing resources by giving entire database
