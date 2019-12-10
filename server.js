@@ -160,7 +160,7 @@ app.post("/attendance", function (req, res) {
 // Running the server
 mongoose.Promise = Promise;
 const run = async () => {
-  const mongooseDb = await mongoose.connect(
+  await mongoose.connect(
     process.env.MONGODB_URI || 'mongodb://localhost:27017/project3',
     {
       useNewUrlParser: true,
@@ -185,4 +185,4 @@ run()
 // copy CLASS from datafordatabase.md file
 
 
-// app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
+//app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
