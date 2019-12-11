@@ -19,10 +19,10 @@ const adminBro = new AdminBro({
         name: 'Studio',
         icon: 'far fa-hand-rock',
       },
-      listProperties: ['firstName', 'lastName', 'email', 'status.active', 'rank.belt' ]
+      listProperties: ['name.first', 'name.last', 'email', 'status.active', 'rank.belt' ]
     },
     sort: {
-      sortby: ['firstName', 'lastName'],
+      sortby: ['name.first', 'name.last'],
       direction: 'asc',
   },
     properties: {

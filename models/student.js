@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const StudentSchema = new Schema({
-        firstName: {
+    name: {
+        first: {
             type:String,
             required: true,
         },
-        lastName: {
+        last: {
             type:String,
             required: true,
         },
@@ -16,7 +17,7 @@ const StudentSchema = new Schema({
             unique: true,
             match: [/^\(?[2-9]\d{2}[-)]?\d{3}-?\d{4}$/, "Please enter a ten-digit phone number"]
    
-       
+        },
     },
         email:  {
             type: String,

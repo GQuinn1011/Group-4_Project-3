@@ -8,12 +8,12 @@ const DropList = (props) => {
 
   const mapStudents = () => {
     return props.students.map(student => {
-      return {...student.contactinfo, id: student._id}
+      return {...student.name, id: student._id}
     })
   }
 
-  const onlyContactInfo = mapStudents()
-  console.log(onlyContactInfo)
+  const onlyName = mapStudents()
+  console.log(onlyName)
   const toggle = () => setDropdownOpen(prevState => !prevState);
 
   return (
@@ -22,10 +22,10 @@ const DropList = (props) => {
         Select Your Name
         </DropdownToggle>
       <DropdownMenu>
-        { onlyContactInfo.map(({firstname, lastname, email, id}) => {
+        { onlyName.map(({first, last, email, id}) => {
           return (
 
-          <DropdownItem onClick={props.handleNameSelect} value={id} key={id}>{firstname} {lastname}</DropdownItem>
+          <DropdownItem onClick={props.handleNameSelect} value={id} key={id}>{first} {last}</DropdownItem>
           )
         })}
       </DropdownMenu>

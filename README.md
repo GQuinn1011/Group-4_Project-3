@@ -22,6 +22,6 @@ This app can be used at gyms to see who signed in and what class they attended.
 ## Made by
 
 Ben Diamond - <https://github.com/DarkCypher777>
-Gaberiel Quinn - <https://github.com/GQuinn1011>
+Gabriel Quinn - <https://github.com/GQuinn1011>
 Michael-Paul Cuccia - <https://github.com/michaelpaulcuccia>
 Amir Dwekat - <https://github.com/Amirdwekat>
