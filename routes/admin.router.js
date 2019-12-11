@@ -22,7 +22,7 @@ const adminBro = new AdminBro({
       listProperties: ['firstName', 'lastName', 'email', 'status.active', 'rank.belt' ]
     },
     sort: {
-      sortby: ['name.firstName', 'name.lastName'],
+      sortby: ['firstName', 'lastName'],
       direction: 'asc',
   },
     properties: {
