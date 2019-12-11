@@ -1,4 +1,4 @@
-# Group 4 Project 3
+# Project Time Capture
 
 ## Description
 
