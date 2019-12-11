@@ -19,12 +19,8 @@ const adminBro = new AdminBro({
         name: 'Studio',
         icon: 'far fa-hand-rock',
       },
-      listProperties: ['name.first', 'name.last', 'email', 'status.active', 'rank.belt' ]
+      listProperties: ['contactinfo.firstname', 'contactinfo.lastname', 'email', 'status.active', 'rank.belt' ]
     },
-    sort: {
-      sortby: ['name.first', 'name.last'],
-      direction: 'asc',
-  },
     properties: {
         dateoflastpromotion:{ 
           type: 'date'
