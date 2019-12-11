@@ -4,14 +4,8 @@ const Schema = mongoose.Schema;
 
 const StudentSchema = new Schema({
     contactinfo: {
-        firstname: {
-            type:String,
-            required: true,
-        },
-        lastname: {
-            type:String,
-            required: true,
-        },
+        firstname: String,
+        lastname: String,
         phoneNumber: {
             type: String,
             unique: true,
