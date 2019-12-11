@@ -19,7 +19,7 @@ const adminBro = new AdminBro({
         name: 'Studio',
         icon: 'far fa-hand-rock',
       },
-      listProperties: ['contactinfo.firstname', 'contactinfo.lastname', 'contacctinfo.email', 'status.active', 'rank.belt' ]
+      listProperties: ['contactinfo.firstname', 'contactinfo.lastname', 'contactinfo.email', 'status.active', 'rank.belt' ]
     },
     properties: {
         dateoflastpromotion:{ 
