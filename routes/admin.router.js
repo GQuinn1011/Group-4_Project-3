@@ -19,24 +19,38 @@ const adminBro = new AdminBro({
         name: 'Studio',
         icon: 'far fa-hand-rock',
       },
-      listProperties: ['contactinfo.firstname', 'contactinfo.lastname', 'contactinfo.email', 'status.active', 'rank.belt' ]
+      listProperties: ['firstName', 'lastName', 'email', 'status.active', 'rank.belt' ]
     },
+    sort: {
+      sortby: ['name.firstName', 'name.lastName'],
+      direction: 'asc',
+  },
     properties: {
         dateoflastpromotion:{ 
-          type: 'date',
-      
+          type: 'date'
         }
     }
-  },Attendance, 
+  }, {resource: Attendance,
+    options: {
+      parent: {
+        name: 'Studio',
+        icon: 'far fa-hand-rock',
+      }
+    }
+  }, 
     {resource: Class,
       options: {
+        parent: {
+          name: 'Studio',
+          icon: 'far fa-hand-rock',
+        },
         listProperties: [
           'title', 'type', 'days', 'starttime', 'endtime'
         ]
       }}],
   branding: {
     logo: 'http://radjibarrettjiujitsu.com/static/media/rbjj-white.f25bae17.png',
-    companyName: 'Group 4',
+    companyName: 'Project Time Capture',
     softwareBrothers: false,
     theme,
   },
