@@ -12,6 +12,10 @@ All you have to do is pick your name from the dropdown list and you will be sign
 
 This app can be used at gyms to see who signed in and what class they attended.
 
+## Demo
+
+Attendence screen: http://ptcg4p3.herokuapp.com Adminstrator panel: http://ptcg4p3.herokuapp.com/admin
+
 ## Made with
 
 * React - <https://reactjs.org/>
